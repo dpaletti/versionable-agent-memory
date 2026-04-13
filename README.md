@@ -27,8 +27,6 @@ cp -r skills/memory/ <your-workspace>/.agents/skills/memory/
 
 ## Setup
 
-### 1. Add to your AGENTS.md
-
 Add this to your project's `AGENTS.md` (create it if it doesn't exist):
 
 ```markdown

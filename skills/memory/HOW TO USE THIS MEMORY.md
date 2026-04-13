@@ -1,80 +1,50 @@
 # How To Use This Memory
 
 This directory is persistent memory for AI agents working on this project.
-Any agent can read and contribute. No special tools required — just markdown.
 
-## Quick Start
+## Reading Memory
 
-1. **Read `MEMORY.md`** — current project state, architecture, decisions
-2. Do your work
-3. **Evaluate** whether the interaction is worth recording
-4. If yes, **append to today's daily file** and/or **update `MEMORY.md`**
+1. **Read `MEMORY.md` first** — current project state, architecture, decisions
+2. For recent context, check the latest daily journals:
+   ```bash
+   ls .agents/memory/????-??-??.md | tail -5
+   ```
+3. For historical context, search:
+   ```bash
+   grep -rn "<query>" .agents/memory/ --include='*.md'
+   ```
 
-## Files
+## Structure
 
-| File | What | How to write |
-|------|------|-------------|
-| `MEMORY.md` | Current project state snapshot | Mutable — edit, update, or rewrite as needed |
-| `YYYY-MM-DD.md` | Daily journal for that date | Append only |
+| File | What |
+|------|------|
+| `MEMORY.md` | Current project state snapshot — mutable, kept up to date |
+| `YYYY-MM-DD.md` | Daily journals — append-only, entries tagged with `@username` |
+| `HOW TO USE THIS MEMORY.md` | This file — explains the memory layout |
 
-## MEMORY.md
+### MEMORY.md
 
-A living snapshot of the project: architecture, decisions, conventions, issues.
+A living snapshot: architecture, decisions, conventions, known issues.
+Mutable — sections are edited, added, or removed as the project evolves.
 
-- **Read this first** when starting any task
-- **Mutable** — edit sections, add new ones, remove outdated ones, rewrite as needed
-- Keep concise — this is a snapshot, not a log
-- Add `> Last updated: YYYY-MM-DD HH:MM UTC` at the top
-- If it grows too complex or disconnected, simplify it
+### Daily Journals
 
-## Daily Journals
-
-One file per day, named `YYYY-MM-DD.md`. Append timestamped entries
-with the author who contributed them:
+One file per day. Each entry is timestamped and attributed:
 
 ```
 ## HH:MM — Short Title (@username)
 
-What was done, what was learned, what changed.
-- Files modified
-- Decisions and rationale
-- Problems and solutions
+What was done, learned, decided.
 ```
 
-- **Append only** — never edit past entries
-- **Always include `@username`** — use `$USER` or the agent/tool name
-- No need to create directories — all files are flat in this folder
+Append-only — past entries are never edited.
 
-## When to Write
+## Modifying Memory
 
-**Not every interaction is worth recording.** After each answer, evaluate:
+To write to this memory, install the `memory` skill:
 
-- Was something meaningful accomplished, learned, or decided?
-- Would a future agent or human benefit from knowing this?
-- Or was this a trivial question with an obvious answer?
+**https://github.com/dpaletti/versionable-agent-memory**
 
-**Batch when appropriate** — if a series of related exchanges are building
-toward a conclusion, wait until the meaningful outcome is reached before
-writing a single cohesive entry, rather than recording each small step.
-
-### Write to the daily journal when:
-- A task or subtask was completed
-- A non-trivial problem was solved
-- A decision was made (and why)
-- Something important about the codebase was discovered
-- The user explicitly says "remember this"
-
-### Update MEMORY.md when:
-- Architecture or design changes
-- New conventions or patterns are established
-- A major issue is resolved or discovered
-- The project state changes significantly
-
-## Conventions
-
-- Dates: `YYYY-MM-DD` (ISO 8601)
-- Times: `HH:MM` (24-hour)
-- Daily files: append-only, one per day
-- Daily entries: always include `@username`
-- MEMORY.md: mutable, keep concise
-- Cross-reference: `[2026-04-10](2026-04-10.md)`
+The skill defines the full protocol: when to write, when to delay,
+how to evaluate whether an interaction is worth recording, and how
+to keep MEMORY.md useful over time.
