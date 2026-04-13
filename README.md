@@ -1,6 +1,6 @@
 # Agent Memory
 
-Cross-agent persistent memory using markdown files. One skill.
+Cross-agent persistent memory using markdown files.
 Works with pi, Claude Code, Cursor, Codex, and any Agent Skills-compatible agent.
 
 ## Install
