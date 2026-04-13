@@ -1,0 +1,10 @@
+{
+  "name": "agent-memory",
+  "version": "0.1.0",
+  "description": "Cross-agent persistent memory using markdown files. One skill. Works with pi, Claude Code, Cursor, Codex, and any Agent Skills-compatible agent.",
+  "keywords": ["pi-package", "agent-skills", "memory"],
+  "license": "MIT",
+  "pi": {
+    "skills": ["./skills"]
+  }
+}

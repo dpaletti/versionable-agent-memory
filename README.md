@@ -1,0 +1,89 @@
+# Agent Memory
+
+Cross-agent persistent memory using markdown files. One skill.
+Works with pi, Claude Code, Cursor, Codex, and any Agent Skills-compatible agent.
+
+## Install
+
+### Pi
+
+```bash
+pi install git:github.com/dpaletti/versionable-agent-memory
+```
+
+### Claude Code
+
+```bash
+/skill install versionable-agent-memory
+```
+
+### Manual (any agent)
+
+Copy `skills/memory/` into `.agents/skills/` in your workspace:
+
+```bash
+cp -r skills/memory/ <your-workspace>/.agents/skills/memory/
+```
+
+## Setup
+
+### 1. Add to your AGENTS.md
+
+Add this to your project's `AGENTS.md` (create it if it doesn't exist):
+
+```markdown
+## Agent Memory
+
+This project uses persistent agent memory.
+Read `.agents/memory/HOW TO USE THIS MEMORY.md` for the full protocol.
+Always read memory at the start of a task. Write to memory at the end of every answer.
+```
+
+### 2. Gitignore the search index
+
+Add to `.gitignore`:
+
+```
+.agents/memory/.index.db
+```
+
+The agent will auto-bootstrap `.agents/memory/` and `HOW TO USE THIS MEMORY.md` on first use — no manual initialization needed.
+
+## How It Works
+
+One skill (`memory`) teaches the agent the protocol:
+
+1. **READ** at the start of every task — `cat .agents/memory/MEMORY.md`
+2. **WRITE** at the end of every answer — append to `.agents/memory/YYYY-MM-DD.md`
+3. **SEARCH** when needed — `grep` or FTS5 via `search.py`
+
+### Memory Files
+
+| File | What | How it's written |
+|------|------|-----------------|
+| `MEMORY.md` | Current project state snapshot — architecture, decisions, conventions, issues | Overwritten entirely when state changes |
+| `YYYY-MM-DD.md` | Daily journal — what was done, learned, decided | Append-only, one file per day |
+| `HOW TO USE THIS MEMORY.md` | Explains the memory system to any agent | Never modified (auto-created from template) |
+
+### Search
+
+The skill includes `search.py` — a zero-dependency FTS5 search script using Python's stdlib `sqlite3`. It builds an incremental index at `.agents/memory/.index.db` (gitignored) and returns ranked results with snippets. Falls back to simple text matching if FTS5 is unavailable.
+
+For quick searches, `grep` also works:
+
+```bash
+grep -rn "query" .agents/memory/ --include='*.md'
+```
+
+## Design
+
+- **Flat directory** — daily files are `YYYY-MM-DD.md` in a single folder, no nesting
+- **No database required** — all memory is plain markdown, searchable with grep
+- **No extension required** — pure skill, works with any agent
+- **Auto-bootstrap** — creates `.agents/memory/` on first use
+- **Git-friendly** — version memory alongside your code, share across your team
+- **Conflict-safe** — daily journals are append-only; MEMORY.md conflicts are resolved via standard git merge
+
+## License
+
+MIT
