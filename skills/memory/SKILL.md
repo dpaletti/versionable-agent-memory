@@ -102,6 +102,7 @@ If `.agents/memory/` doesn't exist yet, create it automatically:
 ```bash
 mkdir -p .agents/memory
 cp <skill-dir>/HOW\ TO\ USE\ THIS\ MEMORY.md .agents/memory/
+echo '.index.db' >> .agents/memory/.gitignore
 ```
 
 Then create an initial `MEMORY.md` describing the project's current state.

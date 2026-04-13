@@ -40,15 +40,7 @@ Always read memory at the start of a task.
 After each answer, evaluate whether the interaction is worth recording.
 ```
 
-### 2. Gitignore the search index
-
-Add to `.gitignore`:
-
-```
-.agents/memory/.index.db
-```
-
-The agent will auto-bootstrap `.agents/memory/` and `HOW TO USE THIS MEMORY.md` on first use — no manual initialization needed.
+The agent will auto-bootstrap `.agents/memory/`, `HOW TO USE THIS MEMORY.md`, and `.gitignore` on first use — no manual initialization needed.
 
 ## How It Works
 
