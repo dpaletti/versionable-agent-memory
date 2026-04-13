@@ -1,6 +1,6 @@
 ---
 name: memory
-description: Persistent agent memory for this workspace. Read at the start of every task to load context. Write at the end of every answer to record progress, decisions, and discoveries. Search when you need to find past context.
+description: Persistent agent memory for this workspace. Read at the start of every task to load context. After each answer, evaluate whether the interaction is worth recording — write only when meaningful. Search when you need to find past context.
 ---
 
 # Agent Memory
@@ -25,15 +25,26 @@ ls .agents/memory/????-??-??.md | tail -5
 
 Then read the relevant files.
 
-### 2. WRITE — At the end of every answer
+### 2. EVALUATE & WRITE — After each answer
 
-After each response where you did meaningful work, append to today's journal:
+After each response, evaluate whether the interaction is worth recording.
+**Not every answer deserves a memory entry.** Ask:
+
+- Was something meaningful accomplished, learned, or decided?
+- Would a future agent or human benefit from knowing this?
+- Or was this a trivial exchange?
+
+**Batch when appropriate** — if a series of related exchanges are building
+toward a conclusion, delay writing until the meaningful outcome is reached.
+Write one cohesive entry rather than recording each small step.
+
+When writing is warranted, append to today's journal:
 
 **File:** `.agents/memory/YYYY-MM-DD.md` (use today's date)
 
 **Format:**
 ```
-## HH:MM — Short Title
+## HH:MM — Short Title (@username)
 
 What was done, learned, changed.
 - Files modified
@@ -41,11 +52,14 @@ What was done, learned, changed.
 - Problems and solutions
 ```
 
-If the project state changed significantly (architecture, conventions, major
-decisions), also **overwrite** `.agents/memory/MEMORY.md` with the current
-snapshot. Include `> Last updated: YYYY-MM-DD HH:MM UTC` at the top.
+Use `$USER` or the agent/tool name for `@username`.
 
-When overwriting MEMORY.md, evaluate whether it needs simplification — if it
+If the project state changed significantly (architecture, conventions, major
+decisions), also **update** `.agents/memory/MEMORY.md`. This file is mutable —
+edit sections, add new ones, remove outdated information, or rewrite as needed.
+Include `> Last updated: YYYY-MM-DD HH:MM UTC` at the top.
+
+When updating MEMORY.md, evaluate whether it needs simplification — if it
 has grown too complex, disconnected, or contains outdated information, clean
 it up. This file is the project reference; keep it useful.
 
@@ -78,6 +92,8 @@ The search script uses a SQLite FTS5 index at `.agents/memory/.index.db`
 | User says "remember this" | Daily journal + MEMORY.md |
 | Architecture changed | MEMORY.md |
 | New convention established | MEMORY.md |
+| Trivial Q&A, obvious answer | Don't write |
+| Mid-sequence, conclusion pending | Delay — batch into one entry |
 
 ## First-Time Setup
 

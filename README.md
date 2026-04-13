@@ -36,7 +36,8 @@ Add this to your project's `AGENTS.md` (create it if it doesn't exist):
 
 This project uses persistent agent memory.
 Read `.agents/memory/HOW TO USE THIS MEMORY.md` for the full protocol.
-Always read memory at the start of a task. Write to memory at the end of every answer.
+Always read memory at the start of a task.
+After each answer, evaluate whether the interaction is worth recording.
 ```
 
 ### 2. Gitignore the search index
@@ -54,15 +55,15 @@ The agent will auto-bootstrap `.agents/memory/` and `HOW TO USE THIS MEMORY.md` 
 One skill (`memory`) teaches the agent the protocol:
 
 1. **READ** at the start of every task — `cat .agents/memory/MEMORY.md`
-2. **WRITE** at the end of every answer — append to `.agents/memory/YYYY-MM-DD.md`
+2. **EVALUATE** after each answer — decide if the interaction is worth recording; batch writes when a meaningful set of exchanges completes
 3. **SEARCH** when needed — `grep` or FTS5 via `search.py`
 
 ### Memory Files
 
 | File | What | How it's written |
 |------|------|-----------------|
-| `MEMORY.md` | Current project state snapshot — architecture, decisions, conventions, issues | Overwritten entirely when state changes |
-| `YYYY-MM-DD.md` | Daily journal — what was done, learned, decided | Append-only, one file per day |
+| `MEMORY.md` | Current project state — architecture, decisions, conventions, issues | Mutable — edit, update, or rewrite sections as needed |
+| `YYYY-MM-DD.md` | Daily journal — what was done, learned, decided | Append-only, one file per day, entries tagged with author |
 | `HOW TO USE THIS MEMORY.md` | Explains the memory system to any agent | Never modified (auto-created from template) |
 
 ### Search
@@ -82,7 +83,7 @@ grep -rn "query" .agents/memory/ --include='*.md'
 - **No extension required** — pure skill, works with any agent
 - **Auto-bootstrap** — creates `.agents/memory/` on first use
 - **Git-friendly** — version memory alongside your code, share across your team
-- **Conflict-safe** — daily journals are append-only; MEMORY.md conflicts are resolved via standard git merge
+- **Multiplayer** — daily journals are append-only with author tags; MEMORY.md conflicts resolved via standard git merge
 
 ## License
 
