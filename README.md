@@ -1,7 +1,6 @@
 # Agent Memory
 
-Cross-agent persistent memory using markdown files.
-Works with pi, Claude Code, Cursor, Codex, and any Agent Skills-compatible agent.
+Persistent memory skill using markdown files meant for version control. The memory is comprised of a global `MEMORY.md` file which is mutable and stores the current state of the system together with daily snapshots which are append only files. This way we avoid memory conflicts when multiple people are working on the same project except for the global memory file where conflicts are actually expected and should be resolved like code conflict are.
 
 ## Install
 
@@ -27,7 +26,7 @@ cp -r skills/memory/ <your-workspace>/.agents/skills/memory/
 
 ## Setup
 
-Add this to your project's `AGENTS.md` (create it if it doesn't exist):
+Add this to your project's `AGENTS.md` or `CLAUDE.md` (create it if it doesn't exist):
 
 ```markdown
 ## Agent Memory
@@ -40,7 +39,7 @@ After each answer, evaluate whether the interaction is worth recording.
 
 The agent will auto-bootstrap `.agents/memory/`, `HOW TO USE THIS MEMORY.md`, and `.gitignore` on first use — no manual initialization needed.
 
-## How It Works
+## How This Works
 
 One skill (`memory`) teaches the agent the protocol:
 
@@ -51,7 +50,8 @@ One skill (`memory`) teaches the agent the protocol:
 ### Memory Files
 
 | File | What | How it's written |
-|------|------|-----------------|
+|------|------|------------------|
+
 | `MEMORY.md` | Current project state — architecture, decisions, conventions, issues | Mutable — edit, update, or rewrite sections as needed |
 | `YYYY-MM-DD.md` | Daily journal — what was done, learned, decided | Append-only, one file per day, entries tagged with author |
 | `HOW TO USE THIS MEMORY.md` | Explains the memory system to any agent | Never modified (auto-created from template) |
@@ -65,16 +65,3 @@ For quick searches, `grep` also works:
 ```bash
 grep -rn "query" .agents/memory/ --include='*.md'
 ```
-
-## Design
-
-- **Flat directory** — daily files are `YYYY-MM-DD.md` in a single folder, no nesting
-- **No database required** — all memory is plain markdown, searchable with grep
-- **No extension required** — pure skill, works with any agent
-- **Auto-bootstrap** — creates `.agents/memory/` on first use
-- **Git-friendly** — version memory alongside your code, share across your team
-- **Multiplayer** — daily journals are append-only with author tags; MEMORY.md conflicts resolved via standard git merge
-
-## License
-
-MIT
