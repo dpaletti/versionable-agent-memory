@@ -2,7 +2,7 @@
 
 Persistent memory skill using markdown files meant for version control.
 
-The memory is comprised of a global mutable `MEMORY.md` file and stores the current state of the system together with daily snapshots which are append only files. This way we **avoid memory conflicts when multiple people are working on the same project** except for the global memory file where conflicts are actually expected and should be resolved like code conflict are.
+This memory is comprised of a global mutable `MEMORY.md` file which stores the current state of the system together with daily snapshots which are append only files. This way we **avoid memory conflicts when multiple people are working on the same project** except for the global memory file where conflicts are actually expected and should be resolved like code conflicts are.
 
 Memory is stored locally in the target repository under `.agents/memory`.
 
