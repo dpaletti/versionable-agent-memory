@@ -1,6 +1,10 @@
 # Agent Memory
 
-Persistent memory skill using markdown files meant for version control. The memory is comprised of a global `MEMORY.md` file which is mutable and stores the current state of the system together with daily snapshots which are append only files. This way we avoid memory conflicts when multiple people are working on the same project except for the global memory file where conflicts are actually expected and should be resolved like code conflict are.
+Persistent memory skill using markdown files meant for version control.
+
+The memory is comprised of a global mutable `MEMORY.md` file and stores the current state of the system together with daily snapshots which are append only files. This way we **avoid memory conflicts when multiple people are working on the same project** except for the global memory file where conflicts are actually expected and should be resolved like code conflict are.
+
+Memory is stored locally in the target repository under `.agents/memory`.
 
 ## Install
 
@@ -28,7 +32,7 @@ cp -r skills/memory/ <your-workspace>/.agents/skills/memory/
 
 Add this to your project's `AGENTS.md` or `CLAUDE.md` (create it if it doesn't exist):
 
-```markdown
+```
 ## Agent Memory
 
 This project uses persistent agent memory.
@@ -41,17 +45,16 @@ The agent will auto-bootstrap `.agents/memory/`, `HOW TO USE THIS MEMORY.md`, an
 
 ## How This Works
 
-One skill (`memory`) teaches the agent the protocol:
+This skill teaches the agent the following protocol:
 
-1. **READ** at the start of every task — `cat .agents/memory/MEMORY.md`
-2. **EVALUATE** after each answer — decide if the interaction is worth recording; batch writes when a meaningful set of exchanges completes
-3. **SEARCH** when needed — `grep` or FTS5 via `search.py`
+1. **READ** at the start of every task
+2. **EVALUATE** after each answer: decide if the interaction is worth recording; batch writes when a meaningful set of exchanges completes
+3. **SEARCH** when needed: `grep` or FTS5 via `search.py`
 
 ### Memory Files
 
-| File | What | How it's written |
-|------|------|------------------|
-
+| File        | What | How it's written |
+|-------------|------|------------------|
 | `MEMORY.md` | Current project state — architecture, decisions, conventions, issues | Mutable — edit, update, or rewrite sections as needed |
 | `YYYY-MM-DD.md` | Daily journal — what was done, learned, decided | Append-only, one file per day, entries tagged with author |
 | `HOW TO USE THIS MEMORY.md` | Explains the memory system to any agent | Never modified (auto-created from template) |
