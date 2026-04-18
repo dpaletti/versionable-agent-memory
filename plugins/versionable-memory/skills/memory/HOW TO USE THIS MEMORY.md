@@ -43,7 +43,7 @@ Append-only — past entries are never edited.
 
 To write to this memory, install the `memory` skill:
 
-**https://github.com/dpaletti/versionable-agent-memory**
+**https://github.com/dpaletti/agent-tools**
 
 The skill defines the full protocol: when to write, when to delay,
 how to evaluate whether an interaction is worth recording, and how

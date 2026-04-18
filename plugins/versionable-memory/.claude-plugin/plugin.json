@@ -1,0 +1,10 @@
+{
+  "name": "versionable-memory",
+  "version": "1.0.0",
+  "description": "Persistent agent memory using markdown files, version-control friendly",
+  "author": {
+    "name": "Daniele Paletti",
+    "email": "danielepaletti98@gmail.com"
+  },
+  "homepage": "https://github.com/dpaletti/agent-tools"
+}

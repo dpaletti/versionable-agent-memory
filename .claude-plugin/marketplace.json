@@ -1,0 +1,19 @@
+{
+  "name": "dpaletti-marketplace",
+  "metadata": {
+    "description": "Daniele Paletti's Claude Code plugins"
+  },
+  "owner": {
+    "name": "Daniele Paletti",
+    "email": "danielepaletti98@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "versionable-memory",
+      "description": "Persistent agent memory using markdown files, version-control friendly",
+      "category": "productivity",
+      "source": "./plugins/versionable-memory",
+      "homepage": "https://github.com/dpaletti/agent-tools"
+    }
+  ]
+}
